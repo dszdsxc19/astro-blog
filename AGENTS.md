@@ -104,3 +104,44 @@ After changes, always verify:
 1. `npm run build` succeeds
 2. `npm run check` passes (astro check + ESLint + Prettier)
 3. Visual check in browser: homepage, blog, dark mode, mobile menu
+
+## GitHub Pages Publishing
+
+This repository uses a local-build `gh-pages` publishing model for the public site.
+
+The source branch `main` contains the public AstroWind framework, site configuration, routes, styles, and build dependencies. It intentionally does not contain the private Markdown publishing source synced from the Siddhartha vault.
+
+The `gh-pages` branch contains only generated static output from `dist/`.
+
+Core constraint:
+
+Builds need local private content, but published output only needs public static artifacts.
+
+Do not replace this with a remote GitHub Actions deploy from `main` unless the workflow is explicitly updated to fetch the private content repository safely.
+
+Expected local publish flow:
+
+```bash
+cd /Users/admin/Desktop/mine/Siddhartha
+./01-PROJECTS/blog-publishing/scripts/sync-to-astrowind.sh
+
+cd /Users/admin/Desktop/mine/astro-blog
+npm run build
+npx --yes gh-pages -d dist -b gh-pages -t -m '发布博客静态站点'
+```
+
+Important:
+
+- Keep `public/.nojekyll`.
+- Keep `src/data/post/siddhartha/` ignored.
+- Use `gh-pages -t` so dotfiles such as `.nojekyll` are included in the published branch.
+- Without `.nojekyll`, GitHub Pages may process the site with Jekyll and ignore `_astro/`, causing CSS/JS files to return 404 and the site to render without styles.
+
+After publishing, verify:
+
+```bash
+curl -I -L https://dszdsxc19.github.io/astro-blog/_astro/Layout.44jdzmAs.css
+curl -I -L https://dszdsxc19.github.io/astro-blog/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CAqDO0tx.js
+```
+
+Both should return `200`.
