@@ -1,7 +1,7 @@
 site:
   name: Terry的日记本
-  site: 'https://dszdsxc19.github.io/astro-blog'
-  base: '/astro-blog'
+  site: 'https://blog.dszdsxc19.life'
+  base: '/'
   trailingSlash: false
 
   googleSiteVerificationId: ''
