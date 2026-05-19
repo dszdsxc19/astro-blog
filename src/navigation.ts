@@ -20,9 +20,10 @@ export const headerData = {
 
 export const footerData = {
   links: [],
-  secondaryLinks: [{ text: 'RSS', href: getAsset('/rss.xml') }],
+  secondaryLinks: [],
   socialLinks: [
     { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
+    { ariaLabel: 'Email', icon: 'tabler:mail', href: 'mailto:dszdsxc19@gmail.com' },
     { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/dszdsxc19' },
   ],
   footNote: `
