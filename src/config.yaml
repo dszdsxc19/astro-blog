@@ -1,5 +1,5 @@
 site:
-  name: Siddhartha
+  name: Terry的日记本
   site: 'https://dszdsxc19.github.io/astro-blog'
   base: '/astro-blog'
   trailingSlash: false
@@ -9,14 +9,14 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: Siddhartha
-    template: '%s — Siddhartha'
-  description: "Siddhartha's public notes and essays."
+    default: Terry的日记本
+    template: '%s — Terry的日记本'
+  description: '写作即思考，编程即创造。'
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: Siddhartha
+    site_name: Terry的日记本
     images:
       - url: '~/assets/images/default.png'
         width: 1200

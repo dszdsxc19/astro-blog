@@ -2,8 +2,17 @@
 import { SITE } from 'astrowind:config';
 ---
 
-<span
-  class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white"
->
-  🚀 {SITE?.name}
+<span class="inline-flex items-center gap-2 text-lg md:text-base font-semibold text-gray-950 dark:text-white">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
+    <defs>
+      <path id="nazar-mark" fill="#fff" d="M16.2 23.8a7.68 7.68 0 1 0 0-15.36a7.68 7.68 0 0 0 0 15.36Z"></path>
+    </defs>
+    <g fill="none">
+      <path fill="#1345B7" d="M16 30c7.732 0 14-6.268 14-14S23.732 2 16 2S2 8.268 2 16s6.268 14 14 14Z"></path>
+      <use href="#nazar-mark"></use>
+      <path fill="#26C9FC" d="M16.2 21.24a5.12 5.12 0 1 0 0-10.24a5.12 5.12 0 0 0 0 10.24Z"></path>
+      <path fill="#212121" d="M16.2 18.68a2.56 2.56 0 1 0 0-5.12a2.56 2.56 0 0 0 0 5.12Z"></path>
+    </g>
+  </svg>
+  <span class="whitespace-nowrap">{SITE?.name}</span>
 </span>
