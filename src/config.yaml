@@ -63,6 +63,21 @@ apps:
     isRelatedPostsEnabled: true
     relatedPostsCount: 4
 
+    comments:
+      isEnabled: true
+      giscus:
+        isEnabled: true
+        repo: 'dszdsxc19/astro-blog'
+        repoId: 'R_kgDOShqHHQ'
+        category: 'General'
+        categoryId: 'DIC_kwDOShqHHc4C9z9J'
+        mapping: 'pathname'
+        strict: false
+        reactionsEnabled: true
+        emitMetadata: false
+        inputPosition: 'bottom'
+        lang: 'zh-CN'
+
 analytics:
   vendors:
     googleAnalytics:

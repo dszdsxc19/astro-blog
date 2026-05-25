@@ -1,0 +1,85 @@
+---
+import { APP_BLOG } from 'astrowind:config';
+
+const comments = APP_BLOG.comments;
+const giscus = comments?.giscus;
+const isEnabled = comments?.isEnabled && giscus?.isEnabled;
+const lang = giscus?.lang ?? 'zh-CN';
+---
+
+{
+  isEnabled && giscus ? (
+    <section class="mx-auto mt-12 max-w-3xl px-6 sm:px-6" aria-label="评论">
+      <div
+        data-giscus-root
+        data-repo={giscus.repo}
+        data-repo-id={giscus.repoId}
+        data-category={giscus.category}
+        data-category-id={giscus.categoryId}
+        data-mapping={giscus.mapping}
+        data-strict={giscus.strict ? '1' : '0'}
+        data-reactions-enabled={giscus.reactionsEnabled ? '1' : '0'}
+        data-emit-metadata={giscus.emitMetadata ? '1' : '0'}
+        data-input-position={giscus.inputPosition}
+        data-lang={lang}
+      />
+    </section>
+  ) : null
+}
+
+<script is:inline>
+  function getGiscusTheme() {
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  }
+
+  function loadGiscus() {
+    document.querySelectorAll('[data-giscus-root]').forEach((root) => {
+      if (root.dataset.giscusLoaded === 'true') return;
+
+      const script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      script.setAttribute('data-repo', root.dataset.repo);
+      script.setAttribute('data-repo-id', root.dataset.repoId);
+      script.setAttribute('data-category', root.dataset.category);
+      script.setAttribute('data-category-id', root.dataset.categoryId);
+      script.setAttribute('data-mapping', root.dataset.mapping);
+      script.setAttribute('data-strict', root.dataset.strict);
+      script.setAttribute('data-reactions-enabled', root.dataset.reactionsEnabled);
+      script.setAttribute('data-emit-metadata', root.dataset.emitMetadata);
+      script.setAttribute('data-input-position', root.dataset.inputPosition);
+      script.setAttribute('data-theme', getGiscusTheme());
+      script.setAttribute('data-lang', root.dataset.lang);
+      script.setAttribute('data-loading', 'lazy');
+
+      root.dataset.giscusLoaded = 'true';
+      root.append(script);
+    });
+  }
+
+  function updateGiscusTheme() {
+    const frame = document.querySelector('iframe.giscus-frame');
+    if (!frame) return;
+
+    frame.contentWindow?.postMessage(
+      {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(),
+          },
+        },
+      },
+      'https://giscus.app'
+    );
+  }
+
+  loadGiscus();
+
+  document.addEventListener('astro:after-swap', loadGiscus);
+  document.addEventListener('click', (event) => {
+    if (event.target instanceof Element && event.target.closest('[data-aw-toggle-color-scheme]')) {
+      window.setTimeout(updateGiscusTheme, 0);
+    }
+  });
+</script>

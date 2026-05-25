@@ -1,8 +1,24 @@
 import getReadingTime from 'reading-time';
 import { toString } from 'mdast-util-to-string';
-import type { RehypePlugin, RemarkPlugin } from '@astrojs/markdown-remark';
 
-export const readingTimeRemarkPlugin: RemarkPlugin = () => {
+type MarkdownTree = Parameters<typeof toString>[0];
+type RemarkFile = {
+  data?: {
+    astro?: {
+      frontmatter?: {
+        readingTime?: number;
+      };
+    };
+  };
+};
+type HtmlNode = {
+  type?: string;
+  tagName?: string;
+  properties?: Record<string, unknown>;
+  children?: HtmlNode[];
+};
+
+export const readingTimeRemarkPlugin = () => {
   return function (tree, file) {
     const textOnPage = toString(tree);
     const readingTime = Math.ceil(getReadingTime(textOnPage).minutes);
@@ -10,10 +26,10 @@ export const readingTimeRemarkPlugin: RemarkPlugin = () => {
     if (typeof file?.data?.astro?.frontmatter !== 'undefined') {
       file.data.astro.frontmatter.readingTime = readingTime;
     }
-  };
+  } satisfies (tree: MarkdownTree, file: RemarkFile) => void;
 };
 
-export const responsiveTablesRehypePlugin: RehypePlugin = () => {
+export const responsiveTablesRehypePlugin = () => {
   return function (tree) {
     if (!tree.children) return;
 
@@ -33,5 +49,5 @@ export const responsiveTablesRehypePlugin: RehypePlugin = () => {
         i++;
       }
     }
-  };
+  } satisfies (tree: HtmlNode) => void;
 };

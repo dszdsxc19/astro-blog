@@ -36,6 +36,22 @@ export interface AppBlogConfig {
   postsPerPage: number;
   isRelatedPostsEnabled: boolean;
   relatedPostsCount: number;
+  comments: {
+    isEnabled: boolean;
+    giscus: {
+      isEnabled: boolean;
+      repo: string;
+      repoId: string;
+      category: string;
+      categoryId: string;
+      mapping: 'pathname' | 'url' | 'title' | 'og:title' | 'specific' | 'number';
+      strict: boolean;
+      reactionsEnabled: boolean;
+      emitMetadata: boolean;
+      inputPosition: 'top' | 'bottom';
+      lang: string;
+    };
+  };
   post: {
     isEnabled: boolean;
     permalink: string;
@@ -135,6 +151,22 @@ const getAppBlog = (config: Config) => {
     postsPerPage: 6,
     isRelatedPostsEnabled: false,
     relatedPostsCount: 4,
+    comments: {
+      isEnabled: false,
+      giscus: {
+        isEnabled: false,
+        repo: '',
+        repoId: '',
+        category: '',
+        categoryId: '',
+        mapping: 'pathname',
+        strict: false,
+        reactionsEnabled: true,
+        emitMetadata: false,
+        inputPosition: 'bottom',
+        lang: 'zh-CN',
+      },
+    },
     post: {
       isEnabled: true,
       permalink: '/blog/%slug%',

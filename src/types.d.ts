@@ -1,3 +1,4 @@
+import type { MarkdownHeading } from 'astro';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { HTMLAttributes, ImageMetadata } from 'astro/types';
 
@@ -20,6 +21,7 @@ export interface Post {
   category?: Taxonomy;
   tags?: Taxonomy[];
   author?: string;
+  toc?: boolean;
 
   metadata?: MetaData;
 
@@ -27,6 +29,8 @@ export interface Post {
 
   /** Rendered Astro component factory for the post body. */
   Content?: AstroComponentFactory;
+  /** Markdown headings extracted by Astro for table of contents rendering. */
+  headings?: MarkdownHeading[];
 
   /** Estimated reading time in minutes. */
   readingTime?: number;

@@ -3,7 +3,9 @@ import { Icon } from 'astro-icon/components';
 
 import Image from '~/components/common/Image.astro';
 import PostTags from '~/components/blog/Tags.astro';
+import TableOfContents from '~/components/blog/TableOfContents.astro';
 import SocialShare from '~/components/common/SocialShare.astro';
+import Giscus from '~/components/blog/Giscus.astro';
 
 import { getPermalink } from '~/utils/permalinks';
 import { getFormattedDate } from '~/utils/utils';
@@ -16,6 +18,8 @@ export interface Props {
 }
 
 const { post, url } = Astro.props;
+const headings = post.headings?.filter((heading) => heading.depth >= 2 && heading.depth <= 3) ?? [];
+const showToc = post.toc === true && headings.length > 0;
 ---
 
 <section class="py-8 sm:py-16 lg:py-20 mx-auto">
@@ -91,14 +95,27 @@ const { post, url } = Astro.props;
         )
       }
     </header>
-    <div
-      class="mx-auto px-6 sm:px-6 max-w-3xl prose prose-md lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8 prose-headings:scroll-mt-[80px] prose-li:my-0"
-    >
-      <slot />
-    </div>
+    {
+      showToc ? (
+        <div class="mx-auto mt-8 grid max-w-6xl gap-10 px-6 sm:px-6 xl:grid-cols-[minmax(0,48rem)_16rem] xl:items-start">
+          <div>
+            <TableOfContents headings={headings} class="mb-8 xl:hidden" />
+            <div class="prose prose-md lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg prose-headings:scroll-mt-[80px] prose-li:my-0">
+              <slot />
+            </div>
+          </div>
+          <TableOfContents headings={headings} class="sticky top-24 hidden xl:block" />
+        </div>
+      ) : (
+        <div class="mx-auto px-6 sm:px-6 max-w-3xl prose prose-md lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8 prose-headings:scroll-mt-[80px] prose-li:my-0">
+          <slot />
+        </div>
+      )
+    }
     <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row">
       <PostTags tags={post.tags} class="mr-5 rtl:mr-0 rtl:ml-5" />
       <SocialShare url={url} text={post.title} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" />
     </div>
+    <Giscus />
   </article>
 </section>
