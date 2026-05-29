@@ -1,5 +1,11 @@
 ---
 import '@fontsource-variable/inter';
+import '@fontsource/noto-sans-sc/chinese-simplified-400.css';
+import '@fontsource/noto-sans-sc/chinese-simplified-500.css';
+import '@fontsource/noto-sans-sc/chinese-simplified-700.css';
+import 'lxgw-wenkai-webfont/lxgwwenkai-light.css';
+import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css';
+import 'lxgw-wenkai-webfont/lxgwwenkai-bold.css';
 
 // 'DM Sans'
 // Nunito
@@ -21,9 +27,10 @@ import '@fontsource-variable/inter';
 
 <style is:inline>
   :root {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    --aw-font-sans: 'Inter Variable', 'Noto Sans SC';
+    --aw-font-serif: 'LXGW WenKai', 'Noto Sans SC';
+    --aw-font-heading: 'Inter Variable', 'Noto Sans SC';
+    --aw-font-prose: 'LXGW WenKai', 'Noto Sans SC';
 
     --aw-color-primary: rgb(1 97 239);
     --aw-color-secondary: rgb(1 84 207);
@@ -42,9 +49,10 @@ import '@fontsource-variable/inter';
   }
 
   .dark {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    --aw-font-sans: 'Inter Variable', 'Noto Sans SC';
+    --aw-font-serif: 'LXGW WenKai', 'Noto Sans SC';
+    --aw-font-heading: 'Inter Variable', 'Noto Sans SC';
+    --aw-font-prose: 'LXGW WenKai', 'Noto Sans SC';
 
     --aw-color-primary: rgb(1 97 239);
     --aw-color-secondary: rgb(1 84 207);

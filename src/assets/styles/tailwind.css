@@ -14,10 +14,13 @@
   --color-muted: var(--aw-color-text-muted);
 
   --font-sans:
-    'var(--aw-font-sans, ui-sans-serif)', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    var(--aw-font-sans, ui-sans-serif), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-serif: 'var(--aw-font-serif, ui-serif)', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
-  --font-heading: 'var(--aw-font-heading, ui-sans-serif)', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--aw-font-serif, ui-serif), ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-heading: var(--aw-font-heading, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
+  --font-prose:
+    var(--aw-font-prose, ui-serif), var(--aw-font-serif, ui-serif), ui-serif, Georgia, Cambria, 'Times New Roman',
+    Times, serif;
 
   --animate-fade: fadeInUp 1s both;
 
@@ -51,6 +54,10 @@
 
 @utility text-muted {
   color: var(--aw-color-text-muted);
+}
+
+@utility font-prose {
+  font-family: var(--font-prose);
 }
 
 @utility btn {
