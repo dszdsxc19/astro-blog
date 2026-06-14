@@ -1,6 +1,4 @@
 ---
-import { Icon } from 'astro-icon/components';
-
 import Image from '~/components/common/Image.astro';
 import PostTags from '~/components/blog/Tags.astro';
 import SocialShare from '~/components/common/SocialShare.astro';
@@ -19,85 +17,74 @@ export interface Props {
 const { post, url } = Astro.props;
 ---
 
-<section class="py-8 sm:py-16 lg:py-20 mx-auto">
+<section class="py-10 sm:py-16 lg:py-24 mx-auto">
   <article>
     <header
-      class={post.image
-        ? 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade'
-        : 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade'}
+      class:list={[
+        'article-header mx-auto max-w-5xl px-5 sm:px-8',
+        'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+      ]}
     >
-      <div class="flex justify-between flex-col sm:flex-row max-w-3xl mx-auto mt-0 mb-2 px-4 sm:px-6 sm:items-center">
-        <p>
-          <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
-          <time datetime={String(post.publishDate)} class="inline-block">{getFormattedDate(post.publishDate)}</time>
-          {
-            post.author && (
-              <>
-                {' '}
-                · <Icon name="tabler:user" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
-                <span class="inline-block">{post.author}</span>
-              </>
-            )
-          }
-          {
-            post.category && (
-              <>
-                {' '}
-                ·{' '}
-                <a class="hover:underline inline-block" href={getPermalink(post.category.slug, 'category')}>
-                  {post.category.title}
-                </a>
-              </>
-            )
-          }
-          {
-            post.readingTime && (
-              <>
-                &nbsp;· <span>{post.readingTime}</span> min read
-              </>
-            )
-          }
-        </p>
+      {
+        post.category && (
+          <a class="article-kicker" href={getPermalink(post.category.slug, 'category')}>
+            {post.category.title}
+          </a>
+        )
+      }
+
+      <div class="mx-auto max-w-4xl text-center">
+        <h1 class="article-title mt-5 text-4xl sm:text-[2.75rem] lg:text-5xl font-semibold font-heading">
+          {post.title}
+        </h1>
+        {post.excerpt && <p class="article-summary mx-auto mt-6 max-w-3xl text-lg sm:text-xl">{post.excerpt}</p>}
       </div>
 
-      <h1 class="article-title px-4 sm:px-6 max-w-3xl mx-auto text-4xl md:text-5xl font-bold font-heading">
-        {post.title}
-      </h1>
-      <p
-        class="article-summary max-w-3xl mx-auto mt-4 mb-8 px-4 sm:px-6 text-lg md:text-xl text-muted dark:text-slate-400"
+      <div
+        class="article-byline mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-3 gap-y-2 border-y py-4 text-sm"
       >
-        {post.excerpt}
-      </p>
+        {post.author && <span class="font-semibold text-heading">{post.author}</span>}
+        {post.author && <span aria-hidden="true" class="article-meta-separator" />}
+        <time datetime={String(post.publishDate)}>{getFormattedDate(post.publishDate)}</time>
+        {
+          post.readingTime && (
+            <>
+              <span aria-hidden="true" class="article-meta-separator" />
+              <span>{post.readingTime} min read</span>
+            </>
+          )
+        }
+      </div>
 
       {
         post.image ? (
           <Image
             src={post.image}
-            class="max-w-full lg:max-w-[900px] mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
-            widths={[400, 900]}
-            sizes="(max-width: 900px) 400px, 900px"
+            class="mt-10 w-full rounded-xl bg-gray-100 dark:bg-slate-800"
+            widths={[480, 800, 1200]}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1024px"
             alt={post?.excerpt || ''}
-            width={900}
-            height={506}
+            width={1200}
+            height={675}
             format="webp"
             loading="eager"
             decoding="async"
           />
-        ) : (
-          <div class="max-w-3xl mx-auto px-4 sm:px-6">
-            <div class="border-t dark:border-slate-700" />
-          </div>
-        )
+        ) : null
       }
     </header>
-    <div
-      class="article-content mx-auto px-6 sm:px-6 max-w-3xl prose font-prose dark:prose-invert dark:prose-headings:text-slate-300 prose-headings:font-heading prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8 prose-headings:scroll-mt-[80px] prose-li:my-0"
-    >
-      <slot />
+    <div class="mx-auto mt-10 max-w-5xl px-5 sm:mt-14 sm:px-8">
+      <div
+        class="article-content mx-auto max-w-3xl prose font-prose dark:prose-invert dark:prose-headings:text-slate-200 prose-headings:font-heading prose-headings:font-semibold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-lg prose-headings:scroll-mt-[80px] prose-li:my-0"
+      >
+        <slot />
+      </div>
     </div>
-    <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row">
-      <PostTags tags={post.tags} class="mr-5 rtl:mr-0 rtl:ml-5" />
-      <SocialShare url={url} text={post.title} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" />
+    <div class="mx-auto mt-8 max-w-5xl px-5 sm:px-8">
+      <div class="mx-auto flex max-w-3xl flex-col justify-between sm:flex-row">
+        <PostTags tags={post.tags} class="mr-5 rtl:mr-0 rtl:ml-5" />
+        <SocialShare url={url} text={post.title} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" />
+      </div>
     </div>
     <Giscus />
   </article>
