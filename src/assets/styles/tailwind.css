@@ -36,6 +36,61 @@
   }
 }
 
+@layer base {
+  body {
+    font-synthesis: none;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+@layer components {
+  .article-title {
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .article-summary {
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    text-wrap: pretty;
+  }
+
+  .article-content {
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    letter-spacing: 0.012em;
+    text-wrap: pretty;
+  }
+
+  .article-content :where(p, li) {
+    line-height: 1.85;
+  }
+
+  .article-content :where(h2, h3, h4) {
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  .article-content :where(code, kbd, samp, pre) {
+    font-variant-ligatures: none;
+    letter-spacing: 0;
+  }
+
+  @media (min-width: 768px) {
+    .article-content {
+      font-size: 1.125rem;
+      line-height: 1.9;
+    }
+
+    .article-content :where(p, li) {
+      line-height: 1.9;
+    }
+  }
+}
+
 @utility bg-page {
   background-color: var(--aw-color-bg-page);
 }
