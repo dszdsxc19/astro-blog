@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://blog.dszdsxc19.life/sitemap-index.xml
+Sitemap: https://blog.dszdsxc19.xyz/sitemap-index.xml
